@@ -1,9 +1,10 @@
 package com.ms.controller;
 
-import com.ms.dao.UserDOMapper;
-import com.ms.dataobject.UserDO;
+import com.ms.service.UserService;
+import com.ms.service.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -13,15 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     @Autowired
-    private UserDOMapper userDOMapper;
+    private UserService userService;
 
-    @RequestMapping("/home")
-    public String home(){
-        System.out.println("测试controller");
-        UserDO userDO = userDOMapper.selectByPrimaryKey(1);
-        if(userDO != null){
-            return "测试用户不存在";
-        }
-        return "用户存在";
+    @RequestMapping("/get")
+    public UserModel getUser(@RequestParam(name = "id")Integer id){
+        //调用service服务获取对应id的用户对象并返回给前端
+        UserModel userModel = userService.getUserById(id);
+        return userModel;
     }
 }
