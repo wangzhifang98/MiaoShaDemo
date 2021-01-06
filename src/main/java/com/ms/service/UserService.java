@@ -1,5 +1,6 @@
 package com.ms.service;
 
+import com.ms.error.BussinessException;
 import com.ms.service.model.UserModel;
 
 /**
@@ -9,4 +10,6 @@ import com.ms.service.model.UserModel;
 public interface UserService {
     //根据用户id查询用户
     UserModel getUserById(Integer id);
+    //注册用户
+    void register(UserModel userModel) throws BussinessException;
 }
