@@ -1,5 +1,6 @@
 package com.ms;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -7,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 @SpringBootApplication
+@MapperScan("com.ms.dao")
 public class MiaoShaDemoApplication {
     //日志对象
     private static final Logger LOG = LoggerFactory.getLogger(MiaoShaDemoApplication.class);
