@@ -7,9 +7,7 @@ import com.ms.service.UserService;
 import com.ms.service.model.UserModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
@@ -19,6 +17,7 @@ import java.util.Random;
  * @data 2020/12/30 16:10
  */
 @RestController
+@CrossOrigin
 public class UserController extends BaseController{
     @Autowired
     private UserService userService;
@@ -50,7 +49,7 @@ public class UserController extends BaseController{
     }
 
     //用户获取otp短信接口
-    @RequestMapping("/getotp")
+    @PostMapping("getotp")
     public CommonReturnType getOtp(@RequestParam(name="telphone")String telphone){
         //需要按照一定规则生成OTP验证码
         Random random = new Random();
