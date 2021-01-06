@@ -28,6 +28,9 @@ public class UserServiceImpl implements UserService {
     public UserModel getUserById(Integer id) {
         //调用userdomapper获取到对应的用户dataobject
         UserDO userDO = userDOMapper.selectByPrimaryKey(id);
+        if(userDO == null){
+            return null;
+        }
         UserPasswordDO userPasswordDO = userPasswordDOMapper.selectByUserId(userDO.getId());
         return convertFromDataObject(userDO, userPasswordDO);
     }
