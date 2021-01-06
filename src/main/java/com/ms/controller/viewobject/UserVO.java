@@ -13,6 +13,16 @@ public class UserVO {
 
     private Integer age;
 
+    private String telphone;
+
+    public String getTelphone() {
+        return telphone;
+    }
+
+    public void setTelphone(String telphone) {
+        this.telphone = telphone;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -52,6 +62,7 @@ public class UserVO {
         sb.append(", name='").append(name).append('\'');
         sb.append(", gender=").append(gender);
         sb.append(", age=").append(age);
+        sb.append(", telphone='").append(telphone).append('\'');
         sb.append('}');
         return sb.toString();
     }
