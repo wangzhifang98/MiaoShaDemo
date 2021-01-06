@@ -14,7 +14,7 @@
         <div class="form-group">
             <label class="control-label">手机号</label>
             <div>
-                <input class="form-control" type="text" placeholder="手机号" id="telphone"/>
+                <input class="form-control" type="text" placeholder="手机号" id="telphone" name="telphone"/>
             </div>
         </div>
         <div class="form-actions">
@@ -45,6 +45,8 @@
                 success:function(data){
                     if(data.status == "success"){
                         alert("otp短息发送成功，注意查收");
+                        // window.location.href="file:///D:/projects/MiaoShaDemo/qianduan/register.html",
+                        window.location.href="http://localhost:63342/MiaoShaDemo/qianduan/register.html";
                     } else{
                         alert("otp发送失败，原因"+data.data.errorMessage);
                     }
