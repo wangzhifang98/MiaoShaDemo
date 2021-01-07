@@ -41,6 +41,7 @@
                 data:{
                     "telphone":$("#telphone").val(),
                 },
+                xhrFields:{withCredentials:true},
                 //dataType:"json",
                 success:function(data){
                     if(data.status == "success"){

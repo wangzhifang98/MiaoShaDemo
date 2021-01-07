@@ -19,7 +19,8 @@ import java.util.Random;
  * @data 2020/12/30 16:10
  */
 @RestController
-@CrossOrigin
+//解决session共享的跨域请求
+@CrossOrigin(originPatterns = "*",allowCredentials = "true",allowedHeaders = "*")
 public class UserController extends BaseController{
     @Autowired
     private UserService userService;
