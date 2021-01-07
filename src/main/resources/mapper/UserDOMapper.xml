@@ -31,7 +31,7 @@
       #{age,jdbcType=INTEGER}, #{telphone,jdbcType=VARCHAR}, #{registerMode,jdbcType=VARCHAR}, 
       #{thirdPartyId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ms.dataobject.UserDO">
+  <insert id="insertSelective" parameterType="com.ms.dataobject.UserDO" keyProperty="id" useGeneratedKeys="true">
     insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ms.dataobject.UserDO">
+  <update id="updateByPrimaryKey" parameterType="com.ms.dataobject.UserDO" >
     update user_info
     set name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=TINYINT},

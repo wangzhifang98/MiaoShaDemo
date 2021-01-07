@@ -10,8 +10,12 @@ import com.ms.service.model.UserModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 /**
@@ -75,7 +79,7 @@ public class UserController extends BaseController{
                                      @RequestParam(name = "name")String name,
                                      @RequestParam(name = "gender")byte gender,
                                      @RequestParam(name = "age")Integer age,
-                                     @RequestParam(name = "password")String password) throws BussinessException {
+                                     @RequestParam(name = "password")String password) throws BussinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
         //验证手机号和对应的otpcode相符合
         String  inSessionOtpCode = (String) this.httpServletRequest.getSession().getAttribute(telphone);
         if(!StringUtils.equals(otpCode,inSessionOtpCode)){
@@ -89,10 +93,19 @@ public class UserController extends BaseController{
         userModel.setTelphone(telphone);
         userModel.setRegisterMode("byphone");
         //加密密码
-        userModel.setEncrptPassword(password);
+        userModel.setEncrptPassword(this.EncodeByMd5(password));
 
         //调用service实现注册
         userService.register(userModel);
-        return null;
+        return CommonReturnType.create(null);
+    }
+    //用户密码加密
+    public String EncodeByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        //确定计算方法
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        BASE64Encoder base64Encoder = new BASE64Encoder();
+        //加密字符串
+        String newstr = base64Encoder.encode(md5.digest(str.getBytes("utf-8")));
+        return newstr;
     }
 }

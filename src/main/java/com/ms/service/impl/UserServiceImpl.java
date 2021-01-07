@@ -72,6 +72,8 @@ public class UserServiceImpl implements UserService {
         //插入用户信息
        userDOMapper.insertSelective(userDO);
 
+       userModel.setId(userDO.getId());
+       
        UserPasswordDO userPasswordDO = convertPasswordFromModel(userModel);
        //插入用户密码
         userPasswordDOMapper.insertSelective(userPasswordDO);
