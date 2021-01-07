@@ -114,11 +114,11 @@
                     if(data.status == "success"){
                         alert("验证码比对成功，成功注册用户");
                     } else{
-                        alert("注册失败，原因2"+data.data.errorMessage);
+                        alert("注册失败，服务器原因"+data.data.errorMessage);
                     }
                 },
                 error:function(data){
-                    alert("注册失败，原因1"+data.responseText);
+                    alert("注册失败，网络原因"+data.responseText);
                 }
             })
         });
