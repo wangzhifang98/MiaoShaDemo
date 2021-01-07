@@ -57,13 +57,20 @@
             <button class="btn btn-info" id="register" type="submit">
                 提交注册
             </button>
+            <button class="btn btn-info" id="login" type="submit">
+                登录
+            </button>
         </div>
     </div>
 </body>
 
 <script>
     jQuery(document).ready(function(){
-        //绑定otp事件
+        //登录
+        $("#login").on("click",function () {
+            window.location.href="http://localhost:63342/MiaoShaDemo/qianduan/login.html";
+        });
+        //注册
         $("#register").on("click",function () {
             var telphone = $("#telphone").val();
             var otpCode = $("#otpCode").val();
