@@ -108,4 +108,19 @@ public class UserController extends BaseController{
         String newstr = base64Encoder.encode(md5.digest(str.getBytes("utf-8")));
         return newstr;
     }
+
+    @RequestMapping("/login")
+    public CommonReturnType login(@RequestParam(name = "telphone")String telphone,@RequestParam(name = "password")String password) throws BussinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        //入参校验
+        if(org.apache.commons.lang3.StringUtils.isEmpty(telphone)||org.apache.commons.lang3.StringUtils.isEmpty(password)){
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
+        //登录校验
+        UserModel userModel =userService.validateLogin(telphone,this.EncodeByMd5(password));
+        //登录标识和用户信息保存
+        this.httpServletRequest.getSession().setAttribute("IS_LOGIN",true);
+        this.httpServletRequest.getSession().setAttribute("LOGIN_USER",userModel);
+        //返回通用对象
+        return CommonReturnType.create(null);
+    }
 }

@@ -105,5 +105,24 @@ public class UserServiceImpl implements UserService {
         userPasswordDO.setUserId(userModel.getId());
         return userPasswordDO;
     }
+    //用户登录校验
+    @Override
+    public UserModel validateLogin(String telphone, String password) throws BussinessException {
+        //通过手机号获取用户信息
+        UserDO userDO = userDOMapper.selectByTelphone(telphone);
+        //非空校验
+        if(userDO==null){
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"该手机号未注册");
+        }
+        //通过用户id获取密码
+        UserPasswordDO userPasswordDO = userPasswordDOMapper.selectByUserId(userDO.getId());
+        //密码校验
+        if(!com.alibaba.druid.util.StringUtils.equals(password,userPasswordDO.getEncrptPassword())){
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"密码校验不对");
+        }
+        UserModel userModel = convertFromDataObject(userDO, userPasswordDO);
+        return userModel;
+    }
+
 
 }
