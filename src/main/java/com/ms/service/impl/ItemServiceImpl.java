@@ -50,7 +50,7 @@ public class ItemServiceImpl implements ItemService {
 
         itemStockDOMapper.insertSelective(itemStockDO);
         //返回创建完成的对象
-        return null;
+        return this.getItemById(itemModel.getId());
     }
     //转化itemodel->dataobiect
     private ItemDO convertItemDoFromItemModel(ItemModel itemModel){
@@ -81,7 +81,28 @@ public class ItemServiceImpl implements ItemService {
     }
     //获取商品详情
     @Override
-    public ItemModel getItemById(Integer id) {
-        return null;
+    public ItemModel getItemById(Integer id) throws BussinessException {
+        //入参校验
+        if(id == null){
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
+        ItemDO itemDO = itemDOMapper.selectByPrimaryKey(id);
+        //操作获得库存数量
+        ItemStockDO itemStockDO = itemStockDOMapper.selectByItemId(itemDO.getId());
+        //itemDO+itemStockDO=itemmodel
+        ItemModel itemModel = convertItemModelFromItemDo(itemDO, itemStockDO);
+        return itemModel;
     }
+    //itemDO+itemStockDO=itemmodel
+    private ItemModel convertItemModelFromItemDo(ItemDO itemDO,ItemStockDO itemStockDO){
+        //非空判断
+        if(itemDO==null||itemStockDO==null){
+            return null;
+        }
+        ItemModel itemModel = new ItemModel();
+        BeanUtils.copyProperties(itemDO,itemModel);
+        itemModel.setStock(itemStockDO.getStock());
+        return itemModel;
+    }
+
 }

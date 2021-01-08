@@ -14,4 +14,6 @@ public interface ItemStockDOMapper {
     int updateByPrimaryKeySelective(ItemStockDO record);
 
     int updateByPrimaryKey(ItemStockDO record);
+    //根据itemid查找库存对象
+    ItemStockDO selectByItemId(Integer id);
 }
