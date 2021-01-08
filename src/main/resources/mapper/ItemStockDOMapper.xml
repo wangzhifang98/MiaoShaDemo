@@ -72,7 +72,7 @@
   <select id="selectByItemId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from item
+    from item_stock
     where item_id = #{itemId,jdbcType=INTEGER}
   </select>
 </mapper>
