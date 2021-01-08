@@ -1,24 +1,36 @@
 package com.ms.service.model;
 
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+
 /**
  * @author 王智芳
  * @data 2021/1/6 10:31
  */
 public class UserModel {
     private Integer id;
-
+    @NotBlank(message = "服务端-用户名不能为空")
+    @Length(min = 2,max = 4,message = "服务端-长度2到4位")
     private String name;
-
+    @NotNull(message = "服务端-性别不能不填")
     private Byte gender;
-
+    @NotNull(message = "年龄不能为空")
+    @Min(value = 0,message = "服务端-年龄必须大于0")
+    @Max(value = 100,message = "服务端-年龄必须小于100")
     private Integer age;
-
+    @NotBlank(message = "服务端-手机号不能为空")
     private String telphone;
 
     private String registerMode;
 
     private String thirdPartyId;
-
+    @NotBlank(message = "服务端-密码不能为空")
     private String encrptPassword;
 
     public Integer getId() {

@@ -77,9 +77,17 @@ public class UserController extends BaseController{
     public CommonReturnType register(@RequestParam(name = "telphone")String telphone,
                                      @RequestParam(name = "otpCode")String otpCode,
                                      @RequestParam(name = "name")String name,
-                                     @RequestParam(name = "gender")byte gender,
+                                     @RequestParam(name = "gender")String gender,
                                      @RequestParam(name = "age")Integer age,
                                      @RequestParam(name = "password")String password) throws BussinessException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        //入参校验(age入参校验失败)
+        if(StringUtils.isEmpty(telphone)
+                ||StringUtils.isEmpty(otpCode)
+                ||StringUtils.isEmpty(name)
+            ||StringUtils.isEmpty(String.valueOf(gender))
+            ||StringUtils.isEmpty(password)){
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"controller入参校验出错");
+        }
         //验证手机号和对应的otpcode相符合
         String  inSessionOtpCode = (String) this.httpServletRequest.getSession().getAttribute(telphone);
         if(!StringUtils.equals(otpCode,inSessionOtpCode)){
@@ -89,7 +97,7 @@ public class UserController extends BaseController{
         UserModel userModel = new UserModel();
         userModel.setName(name);
         userModel.setAge(age);
-        userModel.setGender(gender);
+        userModel.setGender(Byte.valueOf(gender));
         userModel.setTelphone(telphone);
         userModel.setRegisterMode("byphone");
         //加密密码
