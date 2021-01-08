@@ -1,11 +1,13 @@
 package com.ms.dataobject;
 
+import java.math.BigDecimal;
+
 public class ItemDO {
     private Integer id;
 
     private String title;
 
-    private Long price;
+    private BigDecimal price;
 
     private String description;
 
@@ -29,11 +31,11 @@ public class ItemDO {
         this.title = title == null ? null : title.trim();
     }
 
-    public Long getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
