@@ -30,7 +30,7 @@
       #{description,jdbcType=VARCHAR}, #{sales,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ms.dataobject.ItemDO">
+  <insert id="insertSelective" parameterType="com.ms.dataobject.ItemDO" useGeneratedKeys="true" keyProperty="id">
     insert into item
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
