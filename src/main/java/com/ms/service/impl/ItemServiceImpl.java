@@ -1,11 +1,16 @@
 package com.ms.service.impl;
 
+import com.ms.dao.ItemDOMapper;
+import com.ms.dao.ItemStockDOMapper;
+import com.ms.dataobject.ItemDO;
+import com.ms.dataobject.ItemStockDO;
 import com.ms.error.BussinessException;
 import com.ms.error.EmBusinessError;
 import com.ms.service.ItemService;
 import com.ms.service.model.ItemModel;
 import com.ms.validator.ValidationResult;
 import com.ms.validator.ValidatorImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +26,11 @@ public class ItemServiceImpl implements ItemService {
     //校验器
     @Autowired
     private ValidatorImpl validatorimpl;
+
+    @Autowired
+    private ItemDOMapper itemDOMapper;
+    @Autowired
+    private ItemStockDOMapper itemStockDOMapper;
     //创建商品
     @Transactional
     @Override
@@ -31,9 +41,38 @@ public class ItemServiceImpl implements ItemService {
             throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,validationResult.getErrMsg());
         }
         //转化itemodel->dataobiect
+        ItemDO itemDO = this.convertItemDoFromItemModel(itemModel);
         //写入数据库
+        itemDOMapper.insertSelective(itemDO);
+
+        itemModel.setId(itemDO.getId());
+        ItemStockDO itemStockDO = convertItemStockDoFromItemModel(itemModel);
+
+        itemStockDOMapper.insertSelective(itemStockDO);
         //返回创建完成的对象
         return null;
+    }
+    //转化itemodel->dataobiect
+    private ItemDO convertItemDoFromItemModel(ItemModel itemModel){
+        //非空判断
+        if(itemModel==null){
+            return null;
+        }
+        ItemDO itemDO = new ItemDO();
+        BeanUtils.copyProperties(itemModel,itemDO);
+        itemDO.setPrice(itemModel.getPrice());
+        return itemDO;
+    }
+    //转化itestockmodel->dataobiect
+    private ItemStockDO convertItemStockDoFromItemModel(ItemModel itemModel){
+        //非空判断
+        if(itemModel==null){
+            return null;
+        }
+        ItemStockDO itemStockDO = new ItemStockDO();
+        itemStockDO.setItemId(itemModel.getId());
+        itemStockDO.setStock(itemModel.getStock());
+        return itemStockDO;
     }
     //商品列表
     @Override
