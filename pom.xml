@@ -115,9 +115,9 @@
                 </executions>
                 <configuration>
                     <!--是否允许移动生成文件-->
-                    <verbose>true</verbose>
+                    <verbose>false</verbose>
                     <!--是否允许覆盖生成文件-->
-                    <overwrite>true</overwrite>
+                    <overwrite>false</overwrite>
                     <!--配置配置文件路径-->
                     <configurationFile>
                         src/main/resources/MybatisGenerator.xml
