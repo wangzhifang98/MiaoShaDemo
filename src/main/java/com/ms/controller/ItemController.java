@@ -59,9 +59,12 @@ public class ItemController extends BaseController{
     }
 
     //商品详情浏览
-    @RequestMapping("/getItemById")
-    public CommonReturnType getItemById(){
-        return null;
+    @RequestMapping("/details")
+    public CommonReturnType details(@RequestParam(name = "id")Integer id) throws BussinessException {
+        ItemModel itemmodel = itemService.getItemById(id);
+        //model->vo
+        ItemVO itemVO = convertFromModel(itemmodel);
+        return CommonReturnType.create(itemVO);
     }
 
 }
